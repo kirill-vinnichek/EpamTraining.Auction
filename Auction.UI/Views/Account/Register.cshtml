@@ -15,7 +15,7 @@
     <div class="row">
         <div class="span6 offset3">
             <h5>Fields marked with * are required</h5>
-            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { id = "contact-form", @class = "contact-form", role = "form" }))
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { enctype = "multipart/form-data", id = "contact-form", @class = "contact-form", role = "form" }))
             {
                 @Html.AntiForgeryToken()
 
@@ -54,7 +54,9 @@
                 </p>
                 @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
 
-
+                <p>
+                    <input type="file" class="submit" name="img" title='Click to add Images'>
+                </p>
                         <p>
                             <input type="submit" value="Register" class="submit" />
                         </p>

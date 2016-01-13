@@ -79,7 +79,7 @@ namespace Auction.UI.Controllers
             {
                 if (lotService.MakeBet(user, lot))
                     return PartialView("_BetPartial", lot.Bets.Last());
-                return Json(new { success = false },JsonRequestBehavior.AllowGet);
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
             }
             else
             {
@@ -125,7 +125,9 @@ namespace Auction.UI.Controllers
             if (lot == null)
                 return HttpNotFound();
             var model = Mapper.Map<LotDetailsViewModel>(lot);
-
+            if (TempData.ContainsKey("imgCount"))
+                TempData.Remove("imgCount");
+            TempData.Add("imgCount", model.Images.Count());
             return View(model);
         }
 
@@ -135,18 +137,11 @@ namespace Auction.UI.Controllers
             if (img != null && Utils.IsSupportedMimeType(img.ContentType))
             {
                 int count = (int)TempData["imgCount"];
-                if (count < 3)
-                {
+                if (count < 3)                {
                     TempData["imgCount"] = ++count;
-                    var ext = Path.GetExtension(img.FileName);
-                    var path = Path.Combine(ConfigurationManager.AppSettings["ImagesPath"], Guid.NewGuid().ToString() + ext);
-                    var mappedPath = Server.MapPath(path);
-                    if (System.IO.File.Exists(mappedPath))
-                        System.IO.File.Delete(mappedPath);
-                    img.SaveAs(mappedPath);
-                    var priviewPath = mappedPath = Url.Content(path);
-
-                    return Json(new { success = true, img = path, preview_path = priviewPath });
+                    var path = this.StoreImage(img);
+                    var priviewPath = Url.Content(path);
+                        return Json(new { success = true, img = path, preview_path = priviewPath });
                 }
 
             }

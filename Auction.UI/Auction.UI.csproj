@@ -214,6 +214,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ControllerHelper.cs" />
     <Compile Include="Helpers\PageHelper.cs" />
     <Compile Include="Helpers\Utils.cs" />
     <Compile Include="Mapping\AutoMapperConfiguration.cs" />

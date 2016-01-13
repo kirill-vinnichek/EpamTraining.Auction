@@ -8,8 +8,9 @@
 <div class="row">
 
     <div class="span6 offset3 profile">
+        <br />
         <div class="image-wrap">
-            <img src="@Url.Content(Model.ProfileImg.Url)" alt="John Doe">
+            <img src="@Url.Content(Model.AvatarPath ??  "~/Images/noavatar.jpg" )" alt="John Doe">
         </div>
         <h3 class="profile-name">@Model.DisplayName</h3>
         <div class="profile-description">
@@ -26,10 +27,8 @@
             <div class="social">
                 <ul class="social-icons">
                     @foreach (var l in Model.Lots)
-                    {
-                        
-                        
-                        <li><p>@l.Title</p><a href="@Url.Action("Details","Lot", new { id = l.LotId })"><img src="@Url.Content(l.Images.First().Url)" alt="Some picture" class="img-rounded small" /></a></li>
+                    {                                                
+                        <li><p>@l.Title</p><a href="@Url.Action("Details","Lot", new { id = l.LotId })"><img src="@Url.Content(l.Images?.First()?.Url ??  "~/Images/no_image.jpg" )" alt="Some picture" class="img-rounded small" /></a></li>
                         
                     }
                 </ul>
@@ -45,7 +44,7 @@
                     {
                         <li>
                             <p>@l.Title</p>
-                            <a href="@Url.Action("Details","Lot", new { id = l.LotId })"><img src="@Url.Content(l.Images.First().Url)" alt="Some picture" class="img-rounded small" /></a>
+                            <a href="@Url.Action("Details","Lot", new { id = l.LotId })"><img src="@Url.Content(l.Images?.First()?.Url ??  "~/Images/no_image.jpg" )" alt="Some picture" class="img-rounded small" /></a>
                             @{Html.RenderPartial("_BetsPartial", l.Bets);}
                         </li>
                       
@@ -56,6 +55,3 @@
 
     </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-</p>

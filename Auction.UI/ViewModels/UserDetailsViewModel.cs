@@ -21,7 +21,7 @@ namespace Auction.UI.ViewModels
         public DateTime DateCreated { get; set; }
 
         public Role Role { get; set; }
-        public Image ProfileImg { get; set; }
+        public string AvatarPath { get; set; }
         public IEnumerable<Lot> Lots { get; set; }
         public IEnumerable<Lot> InterstingLots { get; set; }
 

@@ -26,14 +26,14 @@ namespace Auction.Model.Models
         public string LastName { get; set; }
 
         public decimal Cash { get; set; }
-
+        public string AvatarPath { get; set; }
         public string PasswordHash { get; set; }       
 
         public DateTime DateCreated { get; set; }
 
         public int RoleId { get; set; }
         public virtual Role Role { get; set; }
-        public virtual Image ProfileImg { get; set; }
+       
         public virtual ICollection<Lot> Lots { get; set; }
 
 

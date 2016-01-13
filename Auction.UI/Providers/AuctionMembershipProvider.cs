@@ -137,7 +137,6 @@ namespace Auction.UI.Providers
             }
 
             var user = Mapper.Map<User>(model);
-
             var role = RoleService.GetRole("user");
             if (role != null)
             {

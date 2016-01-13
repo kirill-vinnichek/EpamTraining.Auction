@@ -33,5 +33,7 @@ namespace Auction.UI.Helpers
 
             return new MvcHtmlString("<ul class=\"navigate\"> " + builder.ToString() + "</ul>");
         }
+
+        
     }
 }

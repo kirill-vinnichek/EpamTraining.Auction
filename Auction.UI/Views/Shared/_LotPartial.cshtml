@@ -1,11 +1,11 @@
 ﻿@model Auction.Model.Models.Lot
 <li class="item-thumbs span3 design">
     <!-- Fancybox - Gallery Enabled - Title - Full Image -->
-    <a class="hover-wrap fancybox" data-fancybox-group="gallery" title="@Model.Title" href=@Url.Content(Model.Images.First().Url)>
+    <a class="hover-wrap fancybox" data-fancybox-group="gallery" title="@Model.Title" href=@Url.Content(Model.Images?.First()?.Url ??  "~/Images/no_image.jpg" )>
         <span class="overlay-img">@Model.Title @Model.CurrentCost $</span>
         <span class="overlay-img-thumb font-icon-resize-full"></span>
     </a>
     <!-- Thumb Image and Description -->
-   <img src=@Url.Content(Model.Images.First().Url) alt="@Model.Description <a href=@Url.Action("Details","Lot",new { id = Model.LotId}) >More...<a>" >
+   <img src=@Url.Content(Model.Images?.First()?.Url ??  "~/Images/no_image.jpg" ) alt="@Model.Description <a href=@Url.Action("Details","Lot",new { id = Model.LotId}) >More...<a>" >
     <a href=@Url.Action("Details","Lot",new { id = Model.LotId})>@Model.Title</a>
 </li>     

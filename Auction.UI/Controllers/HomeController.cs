@@ -26,12 +26,7 @@ namespace Auction.UI.Controllers
 
             int pageNumber = (page ?? 1);
             int pageCount = lotService.Count() / pageSize;
-            var lots = lotService.GetSomeLots(pageSize, (pageNumber - 1) * pageSize);
-            foreach (var l in lots)
-            {
-                if (l.Images.Count < 1)
-                    l.Images.Add(new Image() { Url = "~/Images/no_image.jpg" });
-            }
+            var lots = lotService.GetSomeLots(pageSize, (pageNumber - 1) * pageSize);           
             var viewModel = new IndexViewModel()
             {
                 PageCount = pageCount,
@@ -47,15 +42,11 @@ namespace Auction.UI.Controllers
         {
             if (!string.IsNullOrWhiteSpace(search))
             {
+                
                 int pageNumber = (page ?? 1);
                 int pageCount = lotService.Count() / pageSize;
                 //TODO: выделить метод
-                var lots = lotService.GetSomeLots(pageSize, (pageNumber - 1) * pageSize,search);
-                foreach (var l in lots)
-                {
-                    if (l.Images.Count < 1)
-                        l.Images.Add(new Image() { Url = "~/Images/no_image.jpg" });
-                }
+                var lots = lotService.GetSomeLots(pageSize, (pageNumber - 1) * pageSize,search);                
                 var viewModel = new IndexViewModel()
                 {
                     PageCount = pageCount,

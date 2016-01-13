@@ -1,5 +1,6 @@
 ﻿using Auction.Model.Models;
 using Auction.Service;
+using Auction.UI.Helpers;
 using Auction.UI.Providers;
 using Auction.UI.ViewModels;
 using AutoMapper;
@@ -19,7 +20,7 @@ namespace Auction.UI.Controllers
         private ILotService lotService;
 
 
-        public AccountController(IUserService userService,ILotService lotService)
+        public AccountController(IUserService userService, ILotService lotService)
         {
             this.userService = userService;
             this.lotService = lotService;
@@ -73,7 +74,7 @@ namespace Auction.UI.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterViewModel viewModel)
+        public ActionResult Register(RegisterViewModel viewModel, HttpPostedFileBase img)
         {
             if (ModelState.IsValid)
             {
@@ -85,8 +86,11 @@ namespace Auction.UI.Controllers
                     return View(viewModel);
                 }
 
+
+                if (img != null && Utils.IsSupportedMimeType(img.ContentType))
+                    viewModel.AvatarPath = this.StoreImage(img);
                 var membershipUser = ((AuctionMembershipProvider)Membership.Provider)
-                    .CreateUser(viewModel);
+                .CreateUser(viewModel);
                 if (membershipUser != null)
                 {
                     var user = userService.GetUserByEmail(viewModel.Email);
@@ -102,23 +106,14 @@ namespace Auction.UI.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Details(int id=0)
+        public ActionResult Details(int id = 0)
         {
             var user = userService.GetUser(id);
             if (user == null)
                 user = userService.GetUserByEmail(User.Identity.Name);
             var viewModel = Mapper.Map<UserDetailsViewModel>(user);
             viewModel.InterstingLots = lotService.GetInterstingLots(user);
-            if (viewModel.ProfileImg==null)
-                viewModel.ProfileImg = new Image() { Url = "~/Images/noavatar.jpg" };
-            foreach(var l in viewModel.Lots)
-            {
-                l.Images.Add(new Image() { Url = "~/Images/no_image.jpg" });
-            }
-            foreach (var l in viewModel.InterstingLots)
-            {
-                l.Images.Add(new Image() { Url = "~/Images/no_image.jpg" });
-            }
+
             return View(viewModel);
         }
 
@@ -126,7 +121,7 @@ namespace Auction.UI.Controllers
         {
             userService.AddCash(User.Identity.Name);
             return RedirectToAction("Details");
-            
+
         }
 
 
