@@ -18,8 +18,8 @@ namespace Auction.Data
                 new Role {Name = "admin" },
                 new Role {Name = "user" },
                 new Role {Name = "moderator" }
-            }.ForEach(r => context.Roles.Add(r));      
-
+            }.ForEach(r => context.Roles.Add(r));
+            
             context.Commint();
         }
     }

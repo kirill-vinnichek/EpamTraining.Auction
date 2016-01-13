@@ -17,6 +17,7 @@ namespace Auction.Service
         void Update(User user);
         bool CreateUser(User user);
         bool CanMakeBet(User user, decimal amount);
+        void AddCash(string email);
         IEnumerable<User> Search(string search);
     }
 
@@ -25,7 +26,7 @@ namespace Auction.Service
     {
         private IUnitOfWork uof;
         private IUserRepository userRepository;
-        
+
         public UserService(IUnitOfWork uof, IUserRepository userRepository)
         {
             this.uof = uof;
@@ -59,17 +60,17 @@ namespace Auction.Service
 
         public void Update(User user)
         {
-           userRepository.Update(user);
+            userRepository.Update(user);
             uof.Commit();
         }
 
         public IEnumerable<User> Search(string search)
         {
             var s = search.ToLower();
-            return userRepository.GetMany(u => u.FirstName.ToLower().Contains(s) ||  u.LastName.ToLower().Contains(s) || u.Email.ToLower().Contains(s));
+            return userRepository.GetMany(u => u.FirstName.ToLower().Contains(s) || u.LastName.ToLower().Contains(s) || u.Email.ToLower().Contains(s));
         }
 
-        public bool CanMakeBet(User user,decimal amount)
+        public bool CanMakeBet(User user, decimal amount)
         {
             if (user.Cash < amount)
                 return false;
@@ -79,6 +80,16 @@ namespace Auction.Service
         public IEnumerable<User> GetUsers()
         {
             return userRepository.GetAll();
+        }
+
+        public void AddCash(string email)
+        {
+            var user = GetUserByEmail(email);
+            if (user != null)
+            {
+                user.Cash += 1000;
+                Save();
+            }
         }
     }
 

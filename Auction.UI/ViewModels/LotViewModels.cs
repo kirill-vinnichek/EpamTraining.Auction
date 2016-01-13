@@ -13,7 +13,7 @@ namespace Auction.UI.ViewModels
         [Required(ErrorMessage = "The field can not be empty!")]
         public string Title { get; set; }
         [Display(Name = "Enter Description")]
-        [StringLength(200, ErrorMessage = "Description must contain at least {2} characters", MinimumLength = 10)]
+        [StringLength(300, ErrorMessage = "Description must contain at least {2} characters", MinimumLength = 10)]
         public string Description { get; set; }
         [Required(ErrorMessage = "Enter initial cost")]
         [Range(0.01, double.MaxValue, ErrorMessage = "Enter positive cost")]

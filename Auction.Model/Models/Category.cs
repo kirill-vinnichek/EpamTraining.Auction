@@ -10,6 +10,7 @@ namespace Auction.Model.Models
     {
         public int CategoryId { get; set; }
         public string Title { get; set; }
+        public string Description { get; set; }
         public virtual ICollection<Category> SubCategories { get; set; }
 
 

@@ -106,11 +106,11 @@ namespace Auction.UI.Controllers
         {
             var user = userService.GetUser(id);
             if (user == null)
-                return HttpNotFound();
+                user = userService.GetUserByEmail(User.Identity.Name);
             var viewModel = Mapper.Map<UserDetailsViewModel>(user);
             viewModel.InterstingLots = lotService.GetInterstingLots(user);
             if (viewModel.ProfileImg==null)
-                viewModel.ProfileImg = new Image() { Url = "~/Images/no_image.jpg" };
+                viewModel.ProfileImg = new Image() { Url = "~/Images/noavatar.jpg" };
             foreach(var l in viewModel.Lots)
             {
                 l.Images.Add(new Image() { Url = "~/Images/no_image.jpg" });
@@ -122,7 +122,12 @@ namespace Auction.UI.Controllers
             return View(viewModel);
         }
 
-
+        public ActionResult AddCash()
+        {
+            userService.AddCash(User.Identity.Name);
+            return RedirectToAction("Details");
+            
+        }
 
 
         public ActionResult LogOff()

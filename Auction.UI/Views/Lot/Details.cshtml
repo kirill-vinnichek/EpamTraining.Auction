@@ -15,7 +15,7 @@
         <div class="info-block">
             <div class="info-text">
                 <h3><span class="color-text">@Model.Title</span> <span id="cost">@Model.CurrentCost</span> </h3>
-                <h5>@Model.Seller.DisplayName - exhibited on @Model.DateExhibited</h5>
+                <h5><a href="@Url.Action("Details","Account",new {id = Model.Seller.UserId })" >@Model.Seller.DisplayName</a> - exhibited on @Model.DateExhibited</h5>
                 <p>@Model.Description </p>
                 @if (User.Identity.IsAuthenticated)
                 {
