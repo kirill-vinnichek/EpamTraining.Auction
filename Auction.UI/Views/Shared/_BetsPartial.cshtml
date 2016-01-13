@@ -1,0 +1,14 @@
+﻿@model IEnumerable<Auction.Model.Models.Bet>
+<ul id="bets">
+    @if (Model == null || Model.Count() == 0)
+    {
+        <li>No Bets yet</li>
+    }
+    else
+    {
+        foreach (var b in Model)
+        {
+            <li>@b.User.DisplayName make a bet --> @b.Amount</li>
+        }
+    }
+</ul>

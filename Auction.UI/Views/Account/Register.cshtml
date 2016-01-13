@@ -1,0 +1,66 @@
+﻿@model Auction.UI.ViewModels.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="span12">
+            <div class="title-page">
+                <h2 class="title">Register</h2>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span6 offset3">
+            <h5>Fields marked with * are required</h5>
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { id = "contact-form", @class = "contact-form", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
+
+                <p>
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Email Addres" } })
+                </p>
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label " })
+                <p>
+                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = "First Name" } })
+                </p>
+                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label " })
+                <p>
+                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Last Name" } })
+                </p>
+                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+
+
+                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
+                <p>
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", placeholder = "Password" } })
+                </p>
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+
+                @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label" })
+                <p>
+                    @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", placeholder = "Password" } })
+                </p>
+                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+
+
+                        <p>
+                            <input type="submit" value="Register" class="submit" />
+                        </p>
+
+            }
+        </div>
+    </div>
+</div>
+

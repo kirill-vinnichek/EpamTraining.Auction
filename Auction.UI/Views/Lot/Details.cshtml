@@ -1,0 +1,59 @@
+﻿@model Auction.UI.ViewModels.LotDetailsViewModel
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="span9 offset1">
+        @if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("admin") || User.Identity.Name == Model.Seller.Email)
+                {
+                <a class="button" href="@Url.Action("Edit", "Lot",new { id = Model.LotId})">Edit</a>
+            }
+        }
+        <div class="info-block">
+            <div class="info-text">
+                <h3 ><span class="color-text">@Model.Title</span> <span id="cost">@Model.CurrentCost</span> </h3>
+                <h5>@Model.Seller.DisplayName - exhibited on @Model.DateExhibited</h5>
+                <p>@Model.Description </p>
+
+                @Ajax.ActionLink("Make a bet", "MakeBet", "Lot", new { id = Model.LotId },
+               new AjaxOptions { UpdateTargetId = "bets", InsertionMode = InsertionMode.ReplaceWith, OnSuccess = "OnSuccess" }
+               , new { @class = "button", id = "makeBet" })
+
+            </div>
+     
+            @{ Html.RenderPartial("_BetsPartial", Model.Bets);}
+        </div>
+        <hr />
+        <div class="span9">
+            <div class="row">
+                <section id="projects">
+                    <ul id="thumbs">
+                        @foreach (var img in Model.Images)
+                        { Html.RenderPartial("_ImagePartial", img); }
+                       
+                        <!-- Item Project and Filter Name -->
+                    </ul>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    <script type="text/javascript">
+
+        function OnSuccess(data) {
+            var cost = $('#cost').text();
+            var newCost = 1.2 * cost ;
+            $('#cost').text(newCost);
+        }
+
+    </script>
+
+
+
+}
