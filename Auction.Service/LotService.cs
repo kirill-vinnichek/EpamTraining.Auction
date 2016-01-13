@@ -16,6 +16,7 @@ namespace Auction.Service
         IEnumerable<Lot> GetSomeLots(int take, int skip);
         IEnumerable<Lot> GetSomeLots(int take, int skip, string search);
         IEnumerable<Lot> GetLots(string search);
+        IEnumerable<Lot> GetInterstingLots(User user);
         void AddLot(Lot lot);
         Lot GetLot(int id);
         void Update(Lot lot);
@@ -103,11 +104,16 @@ namespace Auction.Service
             Save();
         }
 
+        public IEnumerable<Lot> GetInterstingLots(User user)
+        {
+            return lotRepository.GetMany(l => l.Bets.Any(b => b.User.UserId == user.UserId));
+        }
+
         public void Save()
         {
             uow.Commit();
         }
 
-       
+        
     }
 }

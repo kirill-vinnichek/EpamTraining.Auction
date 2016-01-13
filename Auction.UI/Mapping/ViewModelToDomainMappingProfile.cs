@@ -22,6 +22,7 @@ namespace Auction.UI.Mapping
                 .ForMember(p => p.DateOfFinishing, opt => opt.MapFrom(source => DateTime.Now.AddDays(source.Duration)))
                 .ForMember(p => p.CurrentCost, opt => opt.MapFrom(source => source.InitialCost));
             CreateMap<LotDetailsViewModel, Lot>();
+            CreateMap<UserDetailsViewModel, User>();
 
         }
     }

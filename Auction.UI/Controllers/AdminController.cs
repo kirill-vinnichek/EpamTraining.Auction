@@ -21,7 +21,8 @@ namespace Auction.UI.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-            return View();
+            var users = userService.GetUsers();
+            return View(users);
         }
 
         [HttpGet]

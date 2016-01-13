@@ -13,7 +13,7 @@ namespace Auction.Model.Models
         {
             DateCreated = DateTime.Now;
             Cash = 1000;
-            LastName = "";
+            LastName = string.Empty;
         }
 
 

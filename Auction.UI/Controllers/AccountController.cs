@@ -1,6 +1,8 @@
-﻿using Auction.Service;
+﻿using Auction.Model.Models;
+using Auction.Service;
 using Auction.UI.Providers;
 using Auction.UI.ViewModels;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,15 +16,18 @@ namespace Auction.UI.Controllers
     public class AccountController : Controller
     {
         private IUserService userService;
+        private ILotService lotService;
 
-        public AccountController(IUserService userService)
+
+        public AccountController(IUserService userService,ILotService lotService)
         {
             this.userService = userService;
+            this.lotService = lotService;
         }
 
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
-        {         
+        {
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -33,9 +38,9 @@ namespace Auction.UI.Controllers
         public ActionResult Login(LoginViewModel viewModel, string returnUrl)
         {
             if (ModelState.IsValid)
-            {                
+            {
                 if (Membership.ValidateUser(viewModel.Email, viewModel.Password))
-                    
+
                 //Проверяет учетные данные пользователя и управляет параметрами пользователей
                 {
                     var user = userService.GetUserByEmail(viewModel.Email);
@@ -74,7 +79,7 @@ namespace Auction.UI.Controllers
             {
                 var anyUser = userService.GetUserByEmail(viewModel.Email);
 
-                if (anyUser!=null)
+                if (anyUser != null)
                 {
                     ModelState.AddModelError("", "This e-mail address is already used");
                     return View(viewModel);
@@ -95,6 +100,28 @@ namespace Auction.UI.Controllers
             }
             return View(viewModel);
         }
+
+        [AllowAnonymous]
+        public ActionResult Details(int id=0)
+        {
+            var user = userService.GetUser(id);
+            if (user == null)
+                return HttpNotFound();
+            var viewModel = Mapper.Map<UserDetailsViewModel>(user);
+            viewModel.InterstingLots = lotService.GetInterstingLots(user);
+            if (viewModel.ProfileImg==null)
+                viewModel.ProfileImg = new Image() { Url = "~/Images/no_image.jpg" };
+            foreach(var l in viewModel.Lots)
+            {
+                l.Images.Add(new Image() { Url = "~/Images/no_image.jpg" });
+            }
+            foreach (var l in viewModel.InterstingLots)
+            {
+                l.Images.Add(new Image() { Url = "~/Images/no_image.jpg" });
+            }
+            return View(viewModel);
+        }
+
 
 
 

@@ -58,6 +58,7 @@ namespace Auction.UI.Controllers
                 TempData.Remove("imgCount");
                 var user = userService.GetUserByEmail(User.Identity.Name);
                 lot.Seller = user;
+                user.Lots.Add(lot);
                 lotService.AddLot(lot);
                 return RedirectToAction("Details", new { id = lot.LotId });
             }
@@ -76,8 +77,9 @@ namespace Auction.UI.Controllers
 
             if (Request.IsAjaxRequest())
             {
-                lotService.MakeBet(user, lot);
-                return PartialView("_BetsPartial", lot.Bets);
+                if (lotService.MakeBet(user, lot))
+                    return PartialView("_BetPartial", lot.Bets.Last());
+                return Json(new { success = false },JsonRequestBehavior.AllowGet);
             }
             else
             {

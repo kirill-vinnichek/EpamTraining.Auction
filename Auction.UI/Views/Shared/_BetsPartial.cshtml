@@ -1,14 +1,38 @@
 ﻿@model IEnumerable<Auction.Model.Models.Bet>
-<ul id="bets">
-    @if (Model == null || Model.Count() == 0)
-    {
+
+@if (Model == null || Model.Count() == 0)
+{
+    <ul id="bets">
         <li>No Bets yet</li>
-    }
-    else
-    {
-        foreach (var b in Model)
-        {
-            <li>@b.User.DisplayName make a bet --> @b.Amount</li>
-        }
-    }
-</ul>
+    </ul>
+}
+else
+{
+    <div class="accordion-group" >
+        <div class="accordion-heading accordionize">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionArea" href="#@Model.First().LotId">
+                All Bets
+                <span class="font-icon-arrow-simple-down"></span>
+            </a>
+        </div>
+        <div id="@Model.First().LotId" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <ul id="bets" >
+                    @foreach (var b in Model)
+                    {
+                        {Html.RenderPartial("_BetPartial", b); }                    
+                    }
+
+                    </ul>
+
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+
+
+

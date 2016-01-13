@@ -13,6 +13,7 @@ namespace Auction.Service
     {
         User GetUser(int id);
         User GetUserByEmail(string email);
+        IEnumerable<User> GetUsers();
         void Update(User user);
         bool CreateUser(User user);
         bool CanMakeBet(User user, decimal amount);
@@ -73,6 +74,11 @@ namespace Auction.Service
             if (user.Cash < amount)
                 return false;
             return true;
+        }
+
+        public IEnumerable<User> GetUsers()
+        {
+            return userRepository.GetAll();
         }
     }
 

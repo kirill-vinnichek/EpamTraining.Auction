@@ -6,3 +6,9 @@
 ul.navigate li{
     display:inline;
 }
+
+img.small{
+    width:150px;
+    height:150px;
+    border:none;
+}

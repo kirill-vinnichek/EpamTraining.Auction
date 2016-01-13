@@ -226,6 +226,7 @@
     <Compile Include="ViewModels\AdminIndexViewModel.cs" />
     <Compile Include="ViewModels\IndexViewModel.cs" />
     <Compile Include="ViewModels\LotViewModels.cs" />
+    <Compile Include="ViewModels\UserDetailsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -246,6 +247,8 @@
     <Content Include="Views\Admin\EditUser.cshtml" />
     <Content Include="Views\Shared\_BetsPartial.cshtml" />
     <Content Include="Views\Lot\Edit.cshtml" />
+    <Content Include="Views\Account\Details.cshtml" />
+    <Content Include="Views\Shared\_BetPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
