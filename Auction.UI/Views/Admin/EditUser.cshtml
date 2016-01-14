@@ -1,4 +1,4 @@
-﻿@model Auction.Model.Models.User
+﻿@model Auction.Model.Models.UserViewModel
 
 @{
     ViewBag.Title = "EditUser";
@@ -16,7 +16,6 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.UserId)
-        @Html.HiddenFor(model => model.PasswordHash)
 
         <div class="form-group">
             @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })

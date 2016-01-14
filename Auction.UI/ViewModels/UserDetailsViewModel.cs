@@ -19,11 +19,9 @@ namespace Auction.UI.ViewModels
         public decimal Cash { get; set; }
 
         public DateTime DateCreated { get; set; }
-
-        public Role Role { get; set; }
         public string AvatarPath { get; set; }
-        public IEnumerable<Lot> Lots { get; set; }
-        public IEnumerable<Lot> InterstingLots { get; set; }
+        public IEnumerable<LotViewModel> Lots { get; set; }
+        public IEnumerable<LotViewModel> InterstingLots { get; set; }
 
         public string DisplayName
         {

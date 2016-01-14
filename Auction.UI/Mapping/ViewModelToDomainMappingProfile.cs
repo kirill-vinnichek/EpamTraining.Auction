@@ -24,6 +24,14 @@ namespace Auction.UI.Mapping
             CreateMap<LotDetailsViewModel, Lot>();
             CreateMap<UserDetailsViewModel, User>();
 
+
+            CreateMap<LotViewModel,Lot>();
+            CreateMap<UserViewModel,User>();
+            CreateMap<BetViewModel,Bet >();
+            CreateMap<ImageViewModel,Image>();
+
+
+
         }
     }
 }

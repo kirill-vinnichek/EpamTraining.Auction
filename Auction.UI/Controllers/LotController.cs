@@ -75,15 +75,19 @@ namespace Auction.UI.Controllers
                 return HttpNotFound();
             var user = userService.GetUserByEmail(User.Identity.Name);
 
-            if (Request.IsAjaxRequest())
+            bool isBetMade = lotService.MakeBet(user.UserId, lot.LotId);
+                if (Request.IsAjaxRequest())
             {
-                if (lotService.MakeBet(user, lot))
-                    return PartialView("_BetPartial", lot.Bets.Last());
+                if (isBetMade)
+                {
+                    var betViewModel = Mapper.Map<BetViewModel>(lot.Bets.Last());
+                    return PartialView("_BetPartial", betViewModel);
+                }
                 return Json(new { success = false }, JsonRequestBehavior.AllowGet);
             }
             else
             {
-                if (lotService.MakeBet(user, lot))
+                if (isBetMade)
                     return RedirectToAction("Details", new { id = lot.LotId });
                 else
                     return RedirectToAction("Details", new { id = lot.LotId });
@@ -106,15 +110,21 @@ namespace Auction.UI.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult Edit(Lot lot)
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(LotViewModel lotViewModel)
         {
-            if (lot.Seller.Email == User.Identity.Name || User.IsInRole("admin"))
+            if (ModelState.IsValid)
             {
-                lotService.Update(lot);
-                return View(lot);
+                if (lotViewModel.Seller.Email == User.Identity.Name || User.IsInRole("admin"))
+                {
+                    var lot = Mapper.Map<Lot>(lotViewModel);
+                    lotService.Update(lot);
+                    return View(lotViewModel);
+                }
+                else
+                    return new HttpUnauthorizedResult();
             }
-            else
-                return new HttpUnauthorizedResult();
+            return View(lotViewModel);
         }
 
 

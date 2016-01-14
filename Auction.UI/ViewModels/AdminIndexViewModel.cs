@@ -8,7 +8,7 @@ namespace Auction.UI.ViewModels
 {
     public class AdminIndexViewModel
     {
-        public IEnumerable<User> Users { get; set; }
+        public IEnumerable<UserViewModel> Users { get; set; }
         public IEnumerable<Category> Category { get; set; }
 
 

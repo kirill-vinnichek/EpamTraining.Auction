@@ -34,8 +34,8 @@ namespace Auction.UI.ViewModels
         public decimal CurrentCost { get; set; }
         public DateTime DateExhibited { get; set; }
         public DateTime? DateSold { get; set; }
-        public  User Seller { get; set; }
-        public  IEnumerable<Image> Images { get; set; }
-        public IEnumerable<Bet> Bets { get; set; }
+        public UserViewModel Seller { get; set; }
+        public  IEnumerable<ImageViewModel> Images { get; set; }
+        public IEnumerable<BetViewModel> Bets { get; set; }
     }
 }

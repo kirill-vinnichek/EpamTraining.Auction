@@ -10,7 +10,7 @@ namespace Auction.UI.ViewModels
     {
         public int PageCount { get; set; }
         public int Page { get; set; }
-        public IEnumerable<Lot> Lots { get; set; }
+        public IEnumerable<LotViewModel> Lots { get; set; }
         public IEnumerable<Category> Categories { get; set; }
 
     }

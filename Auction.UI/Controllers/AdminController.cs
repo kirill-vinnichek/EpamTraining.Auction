@@ -1,5 +1,6 @@
 ﻿using Auction.Model.Models;
 using Auction.Service;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,14 +22,14 @@ namespace Auction.UI.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-            var users = userService.GetUsers();
+            var users =Mapper.Map<IEnumerable<UserViewModel>>(userService.GetUsers());
             return View(users);
         }
 
         [HttpGet]
         public ActionResult EditUser(int id = 0)
         {
-            var user = userService.GetUser(id);
+            var user =Mapper.Map<UserViewModel>(userService.GetUser(id));
             if (user == null)
                 return HttpNotFound();
             return View(user);
@@ -36,22 +37,22 @@ namespace Auction.UI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditUser(User user)
+        public ActionResult EditUser(UserViewModel userViewModel)
         {
             if (ModelState.IsValid)
             {
+                var user = Mapper.Map<User>(userViewModel);
                 userService.Update(user);
                 ViewBag.Result = "Updated";
             }
             else
                 ViewBag.Result = "Error";
-            return View(user);
+            return View(userViewModel);
         }
 
         public ActionResult SearchUser(string search)
         {
-           var users =  userService.Search(search);
-
+           var users = Mapper.Map<IEnumerable<UserViewModel>>(userService.Search(search));            
             return View("Index", users);
 
         }

@@ -1,6 +1,7 @@
 ﻿using Auction.Model.Models;
 using Auction.Service;
 using Auction.UI.ViewModels;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace Auction.UI.Controllers
 
             int pageNumber = (page ?? 1);
             int pageCount = lotService.Count() / pageSize;
-            var lots = lotService.GetSomeLots(pageSize, (pageNumber - 1) * pageSize);           
+            var lots = Mapper.Map<IEnumerable<LotViewModel>>(lotService.GetSomeLots(pageSize, (pageNumber - 1) * pageSize));           
             var viewModel = new IndexViewModel()
             {
                 PageCount = pageCount,
@@ -46,7 +47,7 @@ namespace Auction.UI.Controllers
                 int pageNumber = (page ?? 1);
                 int pageCount = lotService.Count() / pageSize;
                 //TODO: выделить метод
-                var lots = lotService.GetSomeLots(pageSize, (pageNumber - 1) * pageSize,search);                
+                var lots = Mapper.Map<IEnumerable<LotViewModel>>(lotService.GetSomeLots(pageSize, (pageNumber - 1) * pageSize,search));                
                 var viewModel = new IndexViewModel()
                 {
                     PageCount = pageCount,

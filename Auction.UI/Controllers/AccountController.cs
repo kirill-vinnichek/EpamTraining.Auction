@@ -112,7 +112,7 @@ namespace Auction.UI.Controllers
             if (user == null)
                 user = userService.GetUserByEmail(User.Identity.Name);
             var viewModel = Mapper.Map<UserDetailsViewModel>(user);
-            viewModel.InterstingLots = lotService.GetInterstingLots(user);
+            viewModel.InterstingLots = Mapper.Map<IEnumerable<LotViewModel>>(lotService.GetInterstingLots(user.UserId));
 
             return View(viewModel);
         }
