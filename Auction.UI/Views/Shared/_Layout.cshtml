@@ -10,7 +10,6 @@
 
     @Styles.Render("~/Content/Brushed")
     @RenderSection("styles", required: false)
-    <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,200italic,300,300italic,400italic,600,600italic,700,700italic,900' rel='stylesheet' type='text/css'>
 </head>
 <body>
     <header>
@@ -42,7 +41,7 @@
     </header>
 
     <div class="page">
-        <div class="span5 offset7">
+        <div class="span4 offset8">
             @using (Html.BeginForm("Search", "Home", FormMethod.Post, new { @class = "contact-form", role = "form" }))
             {
                 <p>

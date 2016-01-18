@@ -18,12 +18,13 @@ namespace Auction.UI.Controllers
     {
         private IUserService userService;
         private ILotService lotService;
+        private IImageService imageService;
 
-
-        public AccountController(IUserService userService, ILotService lotService)
+        public AccountController(IUserService userService, ILotService lotService, IImageService imageService)
         {
             this.userService = userService;
             this.lotService = lotService;
+            this.imageService = imageService;
         }
 
         [AllowAnonymous]
@@ -88,7 +89,10 @@ namespace Auction.UI.Controllers
 
 
                 if (img != null && Utils.IsSupportedMimeType(img.ContentType))
-                    viewModel.AvatarPath = this.StoreImage(img);
+                {
+                    viewModel.AvatarPath = Guid.NewGuid().ToString();
+                    imageService.StoreImage(viewModel.AvatarPath, img.InputStream);
+                }
                 var membershipUser = ((AuctionMembershipProvider)Membership.Provider)
                 .CreateUser(viewModel);
                 if (membershipUser != null)
@@ -113,7 +117,7 @@ namespace Auction.UI.Controllers
                 user = userService.GetUserByEmail(User.Identity.Name);
             var viewModel = Mapper.Map<UserDetailsViewModel>(user);
             viewModel.InterstingLots = Mapper.Map<IEnumerable<LotViewModel>>(lotService.GetInterstingLots(user.UserId));
-
+            viewModel.AvatarPath = imageService.GetResizedUrl(viewModel.AvatarPath, 250, 250);
             return View(viewModel);
         }
 

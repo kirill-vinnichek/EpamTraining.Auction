@@ -1,8 +1,8 @@
 ﻿@model Auction.Model.Models.ImageViewModel
 <li class="item-thumbs span3 design">
 
-    <a class="hover-wrap fancybox" data-fancybox-group="gallery"  href=@Url.Content(Model.Url)>
+    <a class="hover-wrap fancybox" data-fancybox-group="gallery"  href=@Model.Url>
         <span class="overlay-img-thumb font-icon-zoom-in"></span>
     </a>
-    <img src=@Url.Content(Model.Url) >
+    <img src=@Model.Url >
 </li>     

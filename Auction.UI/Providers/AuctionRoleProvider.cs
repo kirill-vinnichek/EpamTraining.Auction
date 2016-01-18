@@ -14,7 +14,7 @@ namespace Auction.UI.Providers
     public class AuctionRoleProvider : RoleProvider
     {
         public IUserService UserService
-            => (IUserService) DependencyResolver.Current.GetService(typeof(IUserService));
+            => (IUserService)DependencyResolver.Current.GetService(typeof(IUserService));
         public IRoleService RoleService
          => (IRoleService)DependencyResolver.Current.GetService(typeof(IRoleService));
 
@@ -57,25 +57,28 @@ namespace Auction.UI.Providers
         public override string[] GetAllRoles()
         {
             var roles = new List<string>();
-                var r = RoleService.GetRoles();
-                foreach(var s in r)
-                {
-                    roles.Add(s.Name);
-                }                
+            var r = RoleService.GetRoles();
+            foreach (var s in r)
+            {
+                roles.Add(s.Name);
+            }
             return roles.ToArray();
         }
 
         public override string[] GetRolesForUser(string email)
         {
-                var roles = new List<string>();
-                var user = UserService.GetUserByEmail(email);
-                if(user!=null)
+            var roles = new List<string>();
+            var user = UserService.GetUserByEmail(email);
+            if (user != null)
+            {
+                var role = user.Roles;
+                foreach(var r in role)
                 {
-                    var role = user.Role;
-                    if (role != null)
-                        roles.Add(role.Name);
+                    roles.Add(r.Name);
                 }
-                return roles.ToArray();
+                   
+            }
+            return roles.ToArray();
         }
 
         public override string[] GetUsersInRole(string roleName)
@@ -88,10 +91,10 @@ namespace Auction.UI.Providers
             User user = UserService.GetUserByEmail(email);
 
             if (user == null) return false;
+            //TODO: Менял. Если не опадет система роле,смотреть тут
+            Role userRole = user.Roles.FirstOrDefault(r => r.Name == roleName);
 
-            Role userRole = RoleService.GetById(user.RoleId);
-
-            if (userRole != null && userRole.Name == roleName)
+            if (userRole != null)
             {
                 return true;
             }

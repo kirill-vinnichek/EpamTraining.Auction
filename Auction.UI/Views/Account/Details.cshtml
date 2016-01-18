@@ -5,53 +5,54 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row">
-
-    <div class="span6 offset3 profile">
-        <br />
-        <div class="image-wrap">
-            <img src="@Url.Content(Model.AvatarPath ??  "~/Images/noavatar.jpg" )" alt="John Doe">
-        </div>
-        <h3 class="profile-name">@Model.DisplayName</h3>
-        <div class="profile-description">
-            <p>We are we us us from : @Model.DateCreated.ToShortDateString()</p>
-            @if (Model.Email == User.Identity.Name)
+<div class="container">
+    <div class="row">
+        <div class="span6 offset3 profile">
+            <br />
+            <div class="image-wrap">
+                <img src="@(Model.AvatarPath ?? Url.Content( "~/Images/noavatar.jpg" ))" alt="John Doe">
+            </div>
+            <h3 class="profile-name">@Model.DisplayName</h3>
+            <div class="profile-description">
+                <p>We are we us us from : @Model.DateCreated.ToShortDateString()</p>
+                @if (Model.Email == User.Identity.Name)
             {
-                <p>Your cash : @Model.Cash <a href="@Url.Action("AddCash","Account")" >Add Cash</a></p>
-            }
-            <p>Email :<a href="mailto:'@Model.Email'">@Model.Email</a></p>
-        </div>
-        @if (Model.Lots != null && Model.Lots.Count() != 0)
-        {
-            <p>@Model.FirstName's lots:</p>
-            <div class="social">
-                <ul class="social-icons">
-                    @foreach (var l in Model.Lots)
-                    {                                                
-                        <li><p>@l.Title</p><a href="@Url.Action("Details","Lot", new { id = l.LotId })"><img src="@Url.Content(l.Images?.First()?.Url ??  "~/Images/no_image.jpg" )" alt="Some picture" class="img-rounded small" /></a></li>
-                        
-                    }
-                </ul>
+                    <p>Your cash : @Model.Cash <a href="@Url.Action("AddCash","Account")">Add Cash</a></p>
+                }
+                <p>Email :<a href="mailto:'@Model.Email'">@Model.Email</a></p>
             </div>
-        }
-        <hr />
-        @if (Model.InterstingLots != null && Model.InterstingLots.Count() != 0)
-        {
-            <p>@Model.FirstName interted in lots:</p>
-            <div class="social">
-                <ul>
-                    @foreach (var l in Model.InterstingLots)
-                    {
-                        <li>
-                            <p>@l.Title</p>
-                            <a href="@Url.Action("Details","Lot", new { id = l.LotId })"><img src="@Url.Content(l.Images?.First()?.Url ??  "~/Images/no_image.jpg" )" alt="Some picture" class="img-rounded small" /></a>
-                            @{Html.RenderPartial("_BetsPartial", l.Bets);}
-                        </li>
-                      
-                                }
-                </ul>
-            </div>
-                                }
+            @if (Model.Lots != null && Model.Lots.Count() != 0)
+            {
+                <p>@Model.FirstName's lots:</p>
+                <div class="social">
+                    <ul class="social-icons">
+                        @foreach (var l in Model.Lots)
+                        {
+                            <li><p>@l.Title</p><a href="@Url.Action("Details","Lot", new { id = l.LotId })"><img src="@(l.Images?.First()?.Url ?? Url.Content( "~/Images/no_image.jpg" ))" alt="Some picture" class="img-rounded small" /></a></li>
 
+                        }
+                    </ul>
+                </div>
+            }
+            <hr />
+            @if (Model.InterstingLots != null && Model.InterstingLots.Count() != 0)
+            {
+                <p>@Model.FirstName interted in lots:</p>
+                <div class="social">
+                    <ul>
+                        @foreach (var l in Model.InterstingLots)
+                        {
+                            <li>
+                                <p>@l.Title</p>
+                                <a href="@Url.Action("Details","Lot", new { id = l.LotId })"><img src="@(l.Images?.First()?.Url ??  Url.Content("~/Images/no_image.jpg" ))" alt="Some picture" class="img-rounded small" /></a>
+                                @{Html.RenderPartial("_BetsPartial", l.Bets);}
+                            </li>
+
+                                    }
+                    </ul>
+                </div>
+                                    }
+
+        </div>
     </div>
 </div>

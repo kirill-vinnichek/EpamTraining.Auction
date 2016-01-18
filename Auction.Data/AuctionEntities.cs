@@ -27,6 +27,9 @@ namespace Auction.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Conventions.Remove<IncludeMetadataConvention>();
+
+          
+
         }
 
         public virtual void Commint()

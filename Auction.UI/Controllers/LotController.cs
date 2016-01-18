@@ -18,13 +18,13 @@ namespace Auction.UI.Controllers
 
         private ILotService lotService;
         private IUserService userService;
-        public LotController(ILotService lotService, IUserService userService)
+        private IImageService imageService;
+        public LotController(ILotService lotService, IUserService userService,IImageService imageService)
         {
             this.lotService = lotService;
             this.userService = userService;
+            this.imageService = imageService;
         }
-
-
 
         [Authorize]
         [HttpGet]
@@ -81,9 +81,10 @@ namespace Auction.UI.Controllers
                 if (isBetMade)
                 {
                     var betViewModel = Mapper.Map<BetViewModel>(lot.Bets.Last());
+                   
                     return PartialView("_BetPartial", betViewModel);
                 }
-                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, }, JsonRequestBehavior.AllowGet);
             }
             else
             {
@@ -145,12 +146,13 @@ namespace Auction.UI.Controllers
         public ActionResult Upload(HttpPostedFileBase img)
         {
             if (img != null && Utils.IsSupportedMimeType(img.ContentType))
-            {
+            {                            
                 int count = (int)TempData["imgCount"];
                 if (count < 3)                {
                     TempData["imgCount"] = ++count;
-                    var path = this.StoreImage(img);
-                    var priviewPath = Url.Content(path);
+                    var path = Guid.NewGuid().ToString();
+                    imageService.StoreImage(path, img.InputStream);
+                    var priviewPath = imageService.GetResizedUrl(path, 200, 200);
                         return Json(new { success = true, img = path, preview_path = priviewPath });
                 }
 

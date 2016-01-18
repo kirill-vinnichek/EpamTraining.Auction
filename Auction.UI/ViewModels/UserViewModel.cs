@@ -30,9 +30,9 @@ namespace Auction.Model.Models
 
         public DateTime DateCreated { get; set; }
 
-        public int RoleId { get; set; }
-       
-        public virtual ICollection<LotViewModel> Lots { get; set; }
+        public  ICollection<Role> Roles { get; set; }
+
+        public  ICollection<LotViewModel> Lots { get; set; }
 
 
         public string DisplayName

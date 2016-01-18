@@ -10,6 +10,8 @@ using Auction.Data.Infrastructure;
 using Auction.Data.Repository;
 using Auction.Service;
 using System.Web.Mvc;
+using Auction.Service.CloudStorage;
+
 namespace Auction.UI.App_Start
 {
     public static class DIConfig
@@ -22,6 +24,7 @@ namespace Auction.UI.App_Start
             builder.RegisterControllers(Assembly.GetExecutingAssembly());
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerRequest();
             builder.RegisterType<DatabaseFactory>().As<IDatabaseFactory>().InstancePerRequest();
+            builder.RegisterType<CloudinaryStorage>().As<ICloudStorage>().InstancePerRequest();
             builder.RegisterAssemblyTypes(typeof(UserRepository).Assembly)
                 .Where(t => t.Name.EndsWith("Repository"))
                 .AsImplementedInterfaces().InstancePerRequest();

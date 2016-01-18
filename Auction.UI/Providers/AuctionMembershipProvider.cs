@@ -140,7 +140,7 @@ namespace Auction.UI.Providers
             var role = RoleService.GetRole("user");
             if (role != null)
             {
-                user.RoleId = role.RoleId;
+                user.Roles.Add(role);
             }
 
             UserService.CreateUser(user);

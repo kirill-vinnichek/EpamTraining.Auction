@@ -31,6 +31,6 @@ namespace Auction.Model.Models
 
         public virtual ICollection<Image> Images { get; set; }
         public virtual ICollection<Bet> Bets { get; set; }
-
+        public virtual ICollection<Category> Categories { get; set; }
     }
 }

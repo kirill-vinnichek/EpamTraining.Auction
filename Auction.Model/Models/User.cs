@@ -11,6 +11,7 @@ namespace Auction.Model.Models
        
         public User()
         {
+            Roles = new HashSet<Role>();
             DateCreated = DateTime.Now;
             Cash = 1000;
             LastName = string.Empty;
@@ -31,9 +32,8 @@ namespace Auction.Model.Models
 
         public DateTime DateCreated { get; set; }
 
-        public int RoleId { get; set; }
-        public virtual Role Role { get; set; }
-       
+        public virtual ICollection<Role> Roles { get; set; }
+
         public virtual ICollection<Lot> Lots { get; set; }
 
 
